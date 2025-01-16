@@ -2,7 +2,7 @@ import cors from 'cors';
 import Express from 'express';
 import { configDotenv } from 'dotenv';
 
-import connectDB from './config/db';
+import connectDB from './backend/config/db';
 
 const app = Express();
 
