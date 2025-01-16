@@ -1,17 +1,23 @@
 import mongoose from "mongoose";
 
 export default function connectDB() {
-  const url = "mongodb://127.0.0.1/text-project";
+
+  const MONGO_URL = process.env.MONGO_DB_SERVER;
+
+  if (!MONGO_URL) {
+    console.error("MONGO_DB_SERVER environment variable is not defined");
+    process.exit(1);
+  }
 
   try {
-    mongoose.connect(url);
+    mongoose.connect(MONGO_URL);
   } catch (e: any) {
     console.error(e.message);
     process.exit(1);
   }
   const dbConnection = mongoose.connection;
   dbConnection.once("open", (_) => {
-    console.log(`Database connected: ${url}`);
+    console.log(`Database connected: ${MONGO_URL}`);
   });
 
   dbConnection.on("error", (err) => {
